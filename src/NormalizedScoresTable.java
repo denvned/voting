@@ -6,11 +6,11 @@ public class NormalizedScoresTable {
     private final long[] votersScoresTotals;
 
     public NormalizedScoresTable(ScoresTable scoresTable) {
+        votersScoresTotals = new long[scoresTable.getVotersCount()];
+
         for (String candidate : scoresTable.getCandidates()) {
             candidatesScores.put(candidate, new CandidateScores(scoresTable.getCandidateRawScores(candidate)));
         }
-
-        votersScoresTotals = new long[scoresTable.getVotersCount()];
 
         calculateScoresSums();
     }
@@ -130,7 +130,7 @@ public class NormalizedScoresTable {
                 total = total.add(candidate.normalizedScores[i]);
             }
 
-            if (votersScoresTotals[i] != 0) {
+            if (votersScoresTotals[i] == 0) {
                 if (total.signum() != 0) {
                     return false;
                 }
@@ -185,6 +185,8 @@ public class NormalizedScoresTable {
                     assert rawScore >= 0;
 
                     normalizedScore = new BigRational(BigInteger.valueOf(rawScore), BigInteger.valueOf(total));
+
+                    assert normalizedScore.signum() >= 0 && normalizedScore.compareTo(BigRational.ONE) <= 0;
                 }
 
                 normalizedScores[i] = normalizedScore;

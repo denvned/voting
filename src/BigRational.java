@@ -24,9 +24,13 @@ public class BigRational implements Comparable<BigRational> {
 
         this.numerator = numerator;
         this.denominator = denominator;
+
+        assert denominator.signum() > 0;
     }
 
     public int signum() {
+        assert denominator.signum() > 0;
+
         return numerator.signum();
     }
 

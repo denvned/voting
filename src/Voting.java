@@ -14,20 +14,14 @@ public class Voting {
         System.out.println("=================================================");
         System.out.println("=================================================");
 
-        while (true) {
+        do {
             NormalizedScoresTable normalizedScores = new NormalizedScoresTable(scoresTable);
             NormalizedScoresTablePrinter.print(System.out, normalizedScores);
             System.out.println();
             System.out.println("=================================================");
             System.out.println();
 
-            ScoresTable newScoresTable = RoundPerformer.performRound(scoresTable);
-
-            if (newScoresTable.getCandidatesCount() < NUM_WINNERS) {
-                break;
-            }
-
-            scoresTable = newScoresTable;
-        }
+            scoresTable = RoundPerformer.performRound(scoresTable);
+        } while (scoresTable.getCandidatesCount() >= NUM_WINNERS);
     }
 }

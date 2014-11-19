@@ -9,10 +9,10 @@ public class ComparisonTable {
     public ComparisonTable(ScoresTable scoresTable) {
         Set<String> candidates = scoresTable.getCandidates();
 
-        int numCandidates = candidates.size();
+        int candidatesCount = candidates.size();
 
         for (String candidate : candidates) {
-            comparisonTable.put(candidate, new HashMap<String, BigRational>(numCandidates - 1));
+            comparisonTable.put(candidate, new HashMap<String, BigRational>(candidatesCount - 1));
             averageScores.put(candidate, BigRational.ZERO);
         }
 
@@ -43,11 +43,11 @@ public class ComparisonTable {
             }
         }
 
-        BigRational numOpponentsInv = new BigRational(BigInteger.ONE, BigInteger.valueOf(numCandidates - 1));
+        BigRational opponentsCountInv = new BigRational(BigInteger.ONE, BigInteger.valueOf(candidatesCount - 1));
 
         for (String candidate : candidates) {
             BigRational averageScore = averageScores.get(candidate);
-            averageScores.put(candidate, averageScore.multiply(numOpponentsInv));
+            averageScores.put(candidate, averageScore.multiply(opponentsCountInv));
         }
     }
 
